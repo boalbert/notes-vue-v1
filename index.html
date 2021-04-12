@@ -10,17 +10,19 @@
 <section class="grid" id="app">
 
     <header>
-        <h1>Notes 📚</h1>
+        <h1> </h1>
     </header>
 
     <section class="inputForm">
 
         <form v-on:submit.prevent="addNewItem">
 
+
+            <h1>MY NOTES 📚</h1>
+
+            <label for="newItemTitle">Title</label>
             <p>
-            <h2>NEW NOTE</h2>
-            </p>
-            <p>
+
                 <input
                         class="inputTitle"
                         id="newItemTitle"
@@ -28,7 +30,7 @@
                         v-model="newItemTitle"
                 >
             </p>
-
+            <label for="newItemDesc">Content</label>
             <p>
                 <textarea
 
@@ -49,6 +51,7 @@
     <main>
         <article>
             <p>Number of notes: {{ showStats }}</p>
+            <p>Words: {{ calcWords }}</p>
         </article>
         <article class="span-row">
             <h2>Saved notes</h2>
@@ -95,7 +98,7 @@
                     </div>
                   </div>
                   <p>{{ description }} </p>
-                  <p class="date">Date: {{ date }}</p>
+                  <p class="date">Created: {{ date }}</p>
                   </div>`,
         props: ['title', 'description', 'pin', 'date']
     })
@@ -124,7 +127,7 @@
                     date: 'Sun Apr 11 2021'
                 }
             ],
-            nextItemId: 2,
+            nextItemId: 3,
             newItemTitle: '',
             newItemDesc: '',
             stats: ''
@@ -158,6 +161,16 @@
             showStats: function () {
                 return this.stats = this.items.length;
             },
+
+            calcWords: function () {
+                let countWords = 0
+
+                for (let i = 0; i < this.items.length; i++) {
+                    countWords += this.items[i].description.split(" ").length;
+                }
+
+                return countWords;
+            }
         }
     })
 </script>

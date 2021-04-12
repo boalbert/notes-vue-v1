@@ -38,6 +38,7 @@ header {
     grid-template-columns: auto;
     margin: 2rem 0 2rem 0;
     text-align: center;
+
 }
 
 main {
@@ -58,7 +59,6 @@ main {
 .agenda-card-button-row {
     display: flex;
     flex-direction: row;
-    wrap-option: nowrap;
 }
 
 .agenda-card {
@@ -93,6 +93,11 @@ button {
     border-radius: 5px;
 }
 
+.inputForm label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
 input, textarea {
     font-family: 'Open Sans', Arial, sans-serif;
     font-size: 15px;
@@ -101,6 +106,7 @@ input, textarea {
     width: 25rem;
     border-radius: 5px;
     background-color: #EFEFEF;
+    margin-top: 0;
 }
 
 textarea {
@@ -108,8 +114,9 @@ textarea {
     max-height: 250px;
 }
 
-input:focus {
+input:focus, textarea:focus {
     outline: none;
+    border: none;
 }
 
 .span-row {
@@ -120,6 +127,6 @@ input:focus {
 }
 
 .date {
-    font-size: 12px;
+    font-size: 10px;
     color: gray;
 }
