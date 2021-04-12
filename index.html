@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<section class="grid" id="app">
+
+    <header>
+        <h1>Notes 📚</h1>
+    </header>
+
+    <section class="inputForm">
+
+        <form v-on:submit.prevent="addNewItem">
+
+            <p>
+            <h2>NEW NOTE</h2>
+            </p>
+            <p>
+                <input
+                        class="inputTitle"
+                        id="newItemTitle"
+                        placeholder="Title..."
+                        v-model="newItemTitle"
+                >
+            </p>
+
+            <p>
+                <textarea
+
+                        class="inputDesc"
+                        id="newItemDesc"
+                        placeholder="Enter a note..."
+                        required
+                        v-model="newItemDesc"
+                >   </textarea>
+
+            </p>
+
+            <button>💾</button>
+
+        </form>
+    </section>
+
+    <main>
+        <article>
+            <p>Number of notes: {{ showStats }}</p>
+        </article>
+        <article class="span-row">
+            <h2>Saved notes</h2>
+        </article>
+
+        <div
+                is="agenda-item2"
+                v-bind:date="item.date"
+                v-bind:description="item.description"
+
+                v-bind:key="item.id"
+
+                v-bind:pin="item.pinned"
+                v-bind:style="{borderLeft: item.color}"
+                v-bind:title="item.title"
+                v-for="(item, index) in sortedItems"
+
+                v-on:pin="item.pinned = true; item.color = '4px solid cornflowerblue'"
+                v-on:remove="items.splice(index, 1)"
+        >
+
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+</section>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+    Vue.component('agenda-item2', {
+        template:
+                `
+                  <div class="agenda-card">
+                  <div class="agenda-card-header">
+                    <h3><span v-if="pin">📌 </span>{{ title }} </h3>
+                    <div class="agenda-card-button-row">
+                      <button v-on:click="$emit('remove')">❌</button>
+                      <button v-if="!pin" v-on:click="$emit('pin')">📌</button>
+                    </div>
+                  </div>
+                  <p>{{ description }} </p>
+                  <p class="date">Date: {{ date }}</p>
+                  </div>`,
+        props: ['title', 'description', 'pin', 'date']
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            styleObject: {
+                borderLeft: 'blue'
+            },
+            items: [
+                {
+                    id: 1,
+                    title: 'Call someone',
+                    description: 'Contact John next week regarding the business plan',
+                    pinned: false,
+                    color: '',
+                    date: 'Sat Apr 10 2021'
+                },
+                {
+                    id: 2,
+                    title: 'Id 2',
+                    description: 'Contact John next week regarding the business plan',
+                    pinned: false,
+                    color: '',
+                    date: 'Sun Apr 11 2021'
+                }
+            ],
+            nextItemId: 2,
+            newItemTitle: '',
+            newItemDesc: '',
+            stats: ''
+        },
+        methods: {
+            addNewItem: function () {
+                this.items.push({
+                    id: this.nextItemId++,
+                    title: this.newItemTitle,
+                    description: this.newItemDesc,
+                    pinned: this.pinned = false,
+                    date: this.calcNewDate()
+                })
+                this.newItemTitle = ''
+                this.newItemDesc = ''
+            },
+            calcNewDate: function () {
+                return new Date().toDateString()
+            },
+        },
+        computed: {
+            sortedItems: function () {
+                let sortedAgenda = this.items;
+
+                sortedAgenda = sortedAgenda.sort((a, b) => {
+                    return b.pinned - a.pinned;
+                })
+
+                return sortedAgenda;
+            },
+            showStats: function () {
+                return this.stats = this.items.length;
+            },
+        }
+    })
+</script>
+</html>

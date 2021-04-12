@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@700&family=Open+Sans&display=swap');
+
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background-color: #EFEFEF;
+    margin: 0;
+    line-height: 130%;
+}
+
+p {
+    font-size: 14px;
+}
+
+h1 {
+    font-family: 'Arvo', Georgia, serif;
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 95%;
+    margin: 0 auto;
+    max-width: 1400px;
+}
+header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: auto;
+    margin: 2rem 0 2rem 0;
+    text-align: center;
+}
+
+main {
+    grid-area: main;
+    display: flex;
+    flex-flow: row wrap; /* Short for flex-direction and flex-wrap */
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
+.agenda-card-header {
+    display: grid;
+    grid-template-columns:
+        1fr auto;
+    height: 50px;
+}
+
+.agenda-card-button-row {
+    display: flex;
+    flex-direction: row;
+    wrap-option: nowrap;
+}
+
+.agenda-card {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.agenda-card:hover {
+    box-shadow: 4px 4px 5px lightgray;
+}
+
+button {
+    font-size: 20px;
+    border: none;
+    background: none;
+}
+.agenda-card-button-row {
+    display: none;
+}
+
+.agenda-card:hover .agenda-card-button-row {
+    display: grid;
+}
+
+.inputForm {
+    text-align: center;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+input, textarea {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 15px;
+    border: none;
+    padding: 10px;
+    width: 25rem;
+    border-radius: 5px;
+    background-color: #EFEFEF;
+}
+
+textarea {
+    resize: vertical;
+    max-height: 250px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.span-row {
+    flex-basis: 100%;
+    border-bottom: 2px solid lightgray;
+    color: gray;
+    font-weight: bold;
+}
+
+.date {
+    font-size: 12px;
+    color: gray;
+}
