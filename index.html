@@ -9,52 +9,49 @@
 
 <section class="grid" id="app">
 
-    <header>
-        <h1> </h1>
-    </header>
+    <main>
+        <section class="inputForm">
 
-    <section class="inputForm">
-
-        <form v-on:submit.prevent="addNewItem">
+            <form v-on:submit.prevent="addNewItem" id="noteForm">
 
 
-            <h1>MY NOTES 📚</h1>
+                <h1>MY NOTES 📚</h1>
 
-            <label for="newItemTitle">Title</label>
-            <p>
+                <div class="inputArea">
+                    <label for="newItemTitle">Title</label>
+                    <p>
 
-                <input
-                        class="inputTitle"
-                        id="newItemTitle"
-                        placeholder="Title..."
-                        v-model="newItemTitle"
-                >
-            </p>
-            <label for="newItemDesc">Content</label>
-            <p>
+                        <input
+                                class="inputTitle"
+                                id="newItemTitle"
+                                placeholder="Title..."
+                                v-model="newItemTitle"
+                        >
+                    </p>
+
+                    <label for="newItemDesc">Content </label><span v-if="validForm">Please enter some text</span>
+
+
+                    <p>
                 <textarea
 
                         class="inputDesc"
                         id="newItemDesc"
                         placeholder="Enter a note..."
-                        required
                         v-model="newItemDesc"
                 >   </textarea>
 
-            </p>
+                    </p>
+                </div>
+                <button type="submit">💾</button>
 
-            <button>💾</button>
 
-        </form>
-    </section>
-
-    <main>
-        <article>
+            </form>
+        </section>
+        <article class="agenda-card stats-card">
+            <h1>Fun stats! 🤓</h1>
             <p>Number of notes: {{ showStats }}</p>
-            <p>Words: {{ calcWords }}</p>
-        </article>
-        <article class="span-row">
-            <h2>Saved notes</h2>
+            <p>Wordcount: {{ calcWords }}</p>
         </article>
 
         <div
@@ -63,9 +60,8 @@
                 v-bind:description="item.description"
 
                 v-bind:key="item.id"
-
                 v-bind:pin="item.pinned"
-                v-bind:style="{borderLeft: item.color}"
+                v-bind:style="{borderTop: item.color}"
                 v-bind:title="item.title"
                 v-for="(item, index) in sortedItems"
 
@@ -75,14 +71,10 @@
 
         </div>
     </main>
-
-    <footer>
-
-    </footer>
-
 </section>
-
+<script src="js/script.js"></script>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
 
@@ -93,12 +85,12 @@
                   <div class="agenda-card-header">
                     <h3><span v-if="pin">📌 </span>{{ title }} </h3>
                     <div class="agenda-card-button-row">
-                      <button v-on:click="$emit('remove')">❌</button>
                       <button v-if="!pin" v-on:click="$emit('pin')">📌</button>
+                      <button v-on:click="$emit('remove')">❌</button>
                     </div>
                   </div>
                   <p>{{ description }} </p>
-                  <p class="date">Created: {{ date }}</p>
+                  <p class="date">{{ date }}</p>
                   </div>`,
         props: ['title', 'description', 'pin', 'date']
     })
@@ -125,12 +117,55 @@
                     pinned: false,
                     color: '',
                     date: 'Sun Apr 11 2021'
+                },
+                {
+                    id: 3,
+                    title: 'Id 2',
+                    description: 'Contact John next week regarding the business plan',
+                    pinned: false,
+                    color: '',
+                    date: 'Sun Apr 11 2021'
+                },
+                {
+                    id: 4,
+                    title: 'Id 2',
+                    description: 'Contact John next week regarding the business plan',
+                    pinned: false,
+                    color: '',
+                    date: 'Sun Apr 11 2021'
+                },
+                {
+                    id: 5,
+                    title: 'Id 2',
+                    description: 'Contact John next week regarding the business plan',
+                    pinned: false,
+                    color: '',
+                    date: 'Sun Apr 11 2021'
+                },
+                {
+                    id: 6,
+                    title: 'Id 2',
+                    description: 'Contact John next week regarding the business plan ' +
+                        'Contact John next week regarding the business plan ' +
+                        'Contact John next week regarding the business plan',
+                    pinned: false,
+                    color: '',
+                    date: 'Sun Apr 11 2021'
+                },
+                {
+                    id: 7,
+                    title: 'Id 2',
+                    description: 'Contact John next week regarding the business plan',
+                    pinned: false,
+                    color: '',
+                    date: 'Sun Apr 11 2021'
                 }
             ],
-            nextItemId: 3,
+            nextItemId: 8,
             newItemTitle: '',
             newItemDesc: '',
-            stats: ''
+            stats: '',
+            validForm: false
         },
         methods: {
             addNewItem: function () {
@@ -147,6 +182,14 @@
             calcNewDate: function () {
                 return new Date().toDateString()
             },
+            validateForm: function(e) {
+                if(this.newItemDesc.length < 1) {
+                    this.validForm = false;
+                } else {
+                    this.validForm = true;
+                }
+                e.preventDefault();
+            }
         },
         computed: {
             sortedItems: function () {

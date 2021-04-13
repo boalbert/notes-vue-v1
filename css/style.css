@@ -5,60 +5,40 @@ body {
     background-color: #EFEFEF;
     margin: 0;
     line-height: 130%;
+    height:100%;
 }
 
 p {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 h1 {
     font-family: 'Arvo', Georgia, serif;
-    font-size: 30px;
+    font-size: 35px;
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 30px;
 }
 
 h3 {
-    font-size: 16px;
-}
-
-.grid {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 95%;
-    margin: 0 auto;
-    max-width: 1400px;
-}
-header {
-    grid-area: header;
-    display: grid;
-    grid-template-columns: auto;
-    margin: 2rem 0 2rem 0;
-    text-align: center;
-
+    font-size: 25px;
 }
 
 main {
-    grid-area: main;
     display: flex;
     flex-flow: row wrap; /* Short for flex-direction and flex-wrap */
     gap: 1rem;
-    justify-content: flex-start;
+    justify-content: center;
+    padding-top: 10rem;
+    margin: 0 auto;
+    max-width: 1400px;
 }
 
-.agenda-card-header {
-    display: grid;
-    grid-template-columns:
-        1fr auto;
-    height: 50px;
-}
-
-.agenda-card-button-row {
-    display: flex;
-    flex-direction: row;
+.grid {
+    width: 95%;
+    margin: 0 auto;
+    justify-content: center;
 }
 
 .agenda-card {
@@ -66,36 +46,65 @@ main {
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 15px;
+    max-width: 250px;
+    height: 100%;
+    transition: box-shadow 200ms;
+}
+
+.agenda-card-header {
+    display: grid;
+    grid-template-columns:
+        1fr auto;
+    height: 3.5rem;
+}
+
+.agenda-card-button-row {
+    display: flex;
+    grid-template-columns:
+        repeat(2, auto);
+    flex-direction: row;
 }
 
 .agenda-card:hover {
     box-shadow: 4px 4px 5px lightgray;
 }
 
-button {
-    font-size: 20px;
-    border: none;
-    background: none;
-}
-.agenda-card-button-row {
-    display: none;
-}
-
+/*Show pin / remove button when hover on agenda-card*/
 .agenda-card:hover .agenda-card-button-row {
     display: grid;
 }
 
+/*Hide button-row default (non-hover)*/
+.agenda-card-button-row {
+    display: none;
+}
+
+.agenda-card-button-row button {
+    /*filter: grayscale(100%);*/
+    color:transparent; text-shadow: 0 0 0 cornflowerblue;
+    font-size: 15px;
+}
+
+
+button {
+    font-size: 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
 .inputForm {
     text-align: center;
-    margin: 0 auto;
     padding: 15px;
     background-color: white;
     border-radius: 5px;
+    border: 1px solid lightgray;
 }
 
 .inputForm label {
     font-size: 14px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 input, textarea {
@@ -103,10 +112,9 @@ input, textarea {
     font-size: 15px;
     border: none;
     padding: 10px;
-    width: 25rem;
+    width: 20rem;
     border-radius: 5px;
     background-color: #EFEFEF;
-    margin-top: 0;
 }
 
 textarea {
@@ -116,17 +124,49 @@ textarea {
 
 input:focus, textarea:focus {
     outline: none;
-    border: none;
-}
-
-.span-row {
-    flex-basis: 100%;
-    border-bottom: 2px solid lightgray;
-    color: gray;
-    font-weight: bold;
 }
 
 .date {
     font-size: 10px;
     color: gray;
+}
+
+.inputArea {
+    text-align: left;
+}
+
+.inputArea > label {
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    width:100%;
+    height:100px;
+    position:absolute;
+    bottom:0;
+    left:0;
+}
+
+@media screen and (min-width: 1025px) {
+
+    p {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    main {
+        justify-content: flex-start;
+    }
 }
