@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../laboration-books/.idea/laboration-books.iml" filepath="$PROJECT_DIR$/../laboration-books/.idea/laboration-books.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/laboration-vue-notes.iml" filepath="$PROJECT_DIR$/.idea/laboration-vue-notes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/notes-app.iml" filepath="$PROJECT_DIR$/.idea/notes-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/../vue-ovningar/.idea/vue-ovningar.iml" filepath="$PROJECT_DIR$/../vue-ovningar/.idea/vue-ovningar.iml" />
     </modules>
   </component>

@@ -12,11 +12,9 @@
     <main>
         <section class="inputForm">
 
-            <form v-on:submit.prevent="addNewItem" id="noteForm">
-
-
+            <form id="noteForm" v-on:submit.prevent="addNewItem">
                 <h1>MY NOTES 📚</h1>
-
+                <p v-on:click="showStats = true">(❓)</p>
                 <div class="inputArea">
                     <label for="newItemTitle">Title</label>
                     <p>
@@ -30,28 +28,31 @@
                     </p>
 
                     <label for="newItemDesc">Content </label><span v-if="validForm">Please enter some text</span>
-
-
                     <p>
-                <textarea
-
-                        class="inputDesc"
-                        id="newItemDesc"
-                        placeholder="Enter a note..."
-                        v-model="newItemDesc"
-                >   </textarea>
+                        <textarea
+                                class="inputDesc"
+                                id="newItemDesc"
+                                placeholder="Enter a note..."
+                                required
+                                v-model="newItemDesc"
+                        >   </textarea>
 
                     </p>
                 </div>
-                <button type="submit">💾</button>
-
-
+                <button type="submit">Save 💾</button>
             </form>
+
         </section>
-        <article class="agenda-card stats-card">
-            <h1>Fun stats! 🤓</h1>
-            <p>Number of notes: {{ showStats }}</p>
-            <p>Wordcount: {{ calcWords }}</p>
+
+        <article class="agenda-card stats-card" v-if="showStats">
+            <h1>Fun stats!</h1>
+            <ul>
+                <li>Number of notes: {{ countNumberOfNotes }}</li>
+                <li>Wordcount: {{ countWords }}</li>
+                <li>Pinned notes: {{ countPinned }}</li>
+                <li>The word 'contact' is mentioned {{ countTheWordContact }} times.</li>
+            </ul>
+
         </article>
 
         <div
@@ -64,12 +65,12 @@
                 v-bind:style="{borderTop: item.color}"
                 v-bind:title="item.title"
                 v-for="(item, index) in sortedItems"
+                v-on:pin-item="pin(index)"
+                v-on:remove-item="remove(index)">
 
-                v-on:pin="item.pinned = true; item.color = '4px solid cornflowerblue'"
-                v-on:remove="items.splice(index, 1)"
-        >
 
         </div>
+        <!--                v-on:pin="item.pinned = true; item.color = '4px solid cornflowerblue'"-->
     </main>
 </section>
 <script src="js/script.js"></script>
@@ -82,29 +83,36 @@
         template:
                 `
                   <div class="agenda-card">
-                  <div class="agenda-card-header">
-                    <h3><span v-if="pin">📌 </span>{{ title }} </h3>
-                    <div class="agenda-card-button-row">
-                      <button v-if="!pin" v-on:click="$emit('pin')">📌</button>
-                      <button v-on:click="$emit('remove')">❌</button>
-                    </div>
-                  </div>
-                  <p>{{ description }} </p>
-                  <p class="date">{{ date }}</p>
+                      <div class="agenda-card-header">
+                        <h3><span v-if="pin">📌 </span>{{ title }} </h3>
+                      </div>
+                      <p>{{ description }} </p>
+                      <p class="date">{{ date }}</p>
+                      <div class="agenda-card-button-container">
+                        <div class="agenda-card-button-row">
+                          <button v-on:click=pinItem>📌</button>
+                          <button v-on:click="removeItem">❌</button>
+                        </div>
+                      </div>
                   </div>`,
-        props: ['title', 'description', 'pin', 'date']
+        props: ['title', 'description', 'pin', 'date'],
+        methods: {
+            removeItem() {
+                this.$emit('remove-item')
+            },
+            pinItem() {
+                this.$emit('pin-item')
+            }
+        }
     })
 
     var app = new Vue({
         el: '#app',
         data: {
-            styleObject: {
-                borderLeft: 'blue'
-            },
             items: [
                 {
                     id: 1,
-                    title: 'Call someone',
+                    title: 'Call John!',
                     description: 'Contact John next week regarding the business plan',
                     pinned: false,
                     color: '',
@@ -112,60 +120,58 @@
                 },
                 {
                     id: 2,
-                    title: 'Id 2',
-                    description: 'Contact John next week regarding the business plan',
+                    title: 'Shopping',
+                    description: 'Milk, cheese, bread, avocado.',
                     pinned: false,
                     color: '',
                     date: 'Sun Apr 11 2021'
                 },
                 {
                     id: 3,
-                    title: 'Id 2',
-                    description: 'Contact John next week regarding the business plan',
+                    title: 'Laboration 2',
+                    description: 'Dont forget to submit the assignment on Friday!',
                     pinned: false,
                     color: '',
-                    date: 'Sun Apr 11 2021'
+                    date: 'Thu Apr 08 2021'
                 },
                 {
                     id: 4,
-                    title: 'Id 2',
-                    description: 'Contact John next week regarding the business plan',
+                    title: 'Netflix details',
+                    description: 'login: username@email.com password: aGreatPass88',
                     pinned: false,
                     color: '',
-                    date: 'Sun Apr 11 2021'
+                    date: 'Fri Apr 09 2021'
                 },
                 {
                     id: 5,
-                    title: 'Id 2',
-                    description: 'Contact John next week regarding the business plan',
+                    title: 'Daycare closed',
+                    description: 'Daycare is closed week 28 - 32',
                     pinned: false,
                     color: '',
                     date: 'Sun Apr 11 2021'
                 },
                 {
                     id: 6,
-                    title: 'Id 2',
-                    description: 'Contact John next week regarding the business plan ' +
-                        'Contact John next week regarding the business plan ' +
-                        'Contact John next week regarding the business plan',
+                    title: 'Vacation',
+                    description: 'Contact Anders regarding vacation week 23 - 24. Wondered if I can come in and work. ',
                     pinned: false,
                     color: '',
-                    date: 'Sun Apr 11 2021'
+                    date: 'Mon Apr 12 2021'
                 },
                 {
                     id: 7,
-                    title: 'Id 2',
-                    description: 'Contact John next week regarding the business plan',
+                    title: 'Runs this week (workout-plan)',
+                    description: 'mon: easy pace(45min), tue: intervals (50min), thur: progression run(40min), sat: long run (100min)',
                     pinned: false,
                     color: '',
-                    date: 'Sun Apr 11 2021'
+                    date: 'Tue Apr 13 2021'
                 }
             ],
             nextItemId: 8,
             newItemTitle: '',
             newItemDesc: '',
             stats: '',
-            validForm: false
+            showStats: false
         },
         methods: {
             addNewItem: function () {
@@ -182,30 +188,36 @@
             calcNewDate: function () {
                 return new Date().toDateString()
             },
-            validateForm: function(e) {
-                if(this.newItemDesc.length < 1) {
-                    this.validForm = false;
+            remove(index) {
+                this.items.splice(index, 1)
+            },
+            pin(index) {
+                if (this.items[index].pinned === false) {
+                    this.items[index].pinned = true
+                    this.items[index].color = '2px solid cornflowerblue'
                 } else {
-                    this.validForm = true;
+                    this.items[index].pinned = false
+                    this.items[index].color = ''
                 }
-                e.preventDefault();
             }
         },
         computed: {
             sortedItems: function () {
-                let sortedAgenda = this.items;
 
-                sortedAgenda = sortedAgenda.sort((a, b) => {
+                let sortByPinned = this.items;
+
+                sortByPinned = sortByPinned.sort((a, b) => {
+
                     return b.pinned - a.pinned;
                 })
 
-                return sortedAgenda;
+                return sortByPinned;
             },
-            showStats: function () {
+            countNumberOfNotes: function () {
                 return this.stats = this.items.length;
             },
 
-            calcWords: function () {
+            countWords: function () {
                 let countWords = 0
 
                 for (let i = 0; i < this.items.length; i++) {
@@ -213,6 +225,52 @@
                 }
 
                 return countWords;
+            },
+
+            countPinned: function () {
+                let countPinned = 0
+
+                for (let i = 0; i < this.items.length; i++) {
+                    if (this.items[i].pinned) {
+                        countPinned++
+                    }
+                }
+                return countPinned;
+            },
+            countTheWordContact: function () {
+                let countContact = 0
+
+                let allwords = []
+
+                for (let i = 0; i < this.items.length; i++) {
+                    allwords.push(this.items[i].description.split(" "))
+                }
+
+                console.log(allwords)
+                console.log('Allwords Length: ' + allwords.length)
+
+                let randomNoteNumber = Math.floor((Math.random() * allwords.length) + 1);
+                console.log('Random Number: ' + randomNoteNumber)
+
+                console.log(allwords[randomNoteNumber])
+
+                let randomArrayDesc = new Array(allwords[randomNoteNumber])
+                console.log('RandomArrayDesc: ' + randomArrayDesc)
+
+                let arrayItem = randomArrayDesc[0];
+                console.log('ArrayItem: ' + arrayItem)
+
+
+                for (let i = 0; i < this.items.length; i++) {
+
+                    let desc = this.items[i].description.toLowerCase();
+
+                    if (desc.includes('contact')) {
+                        countContact++;
+                    }
+                }
+                return countContact;
+
             }
         }
     })

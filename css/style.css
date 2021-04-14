@@ -3,42 +3,43 @@
 body {
     font-family: 'Open Sans', Arial, sans-serif;
     background-color: #EFEFEF;
-    margin: 0;
-    line-height: 130%;
-    height:100%;
+
 }
 
 p {
     font-size: 16px;
+    line-height: 130%;
 }
 
 h1 {
     font-family: 'Arvo', Georgia, serif;
-    font-size: 35px;
+    font-size: 50px;
 }
 
 h2 {
-    font-size: 30px;
+    font-size: 40px;
 }
 
 h3 {
-    font-size: 25px;
+    font-size: 30px;
 }
 
 main {
     display: flex;
     flex-flow: row wrap; /* Short for flex-direction and flex-wrap */
-    gap: 1rem;
-    justify-content: center;
-    padding-top: 10rem;
+    grid-gap: 10px;
+    justify-content: flex-start;
+    padding-top: 5rem;
     margin: 0 auto;
-    max-width: 1400px;
+    width: 95%;
 }
 
 .grid {
-    width: 95%;
+    /*width: 95%;*/
+    grid-gap: 10px;
     margin: 0 auto;
-    justify-content: center;
+    /*justify-content: center;*/
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .agenda-card {
@@ -46,23 +47,19 @@ main {
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 15px;
-    max-width: 250px;
+    max-width: 300px;
     height: 100%;
     transition: box-shadow 200ms;
 }
 
-.agenda-card-header {
-    display: grid;
-    grid-template-columns:
-        1fr auto;
-    height: 3.5rem;
+.agenda-card h1, h3 {
+    margin: 0;
+    padding: 5px 0 0 0;
 }
 
-.agenda-card-button-row {
-    display: flex;
-    grid-template-columns:
-        repeat(2, auto);
-    flex-direction: row;
+.agenda-card-header {
+    display: grid;
+
 }
 
 .agenda-card:hover {
@@ -71,7 +68,8 @@ main {
 
 /*Show pin / remove button when hover on agenda-card*/
 .agenda-card:hover .agenda-card-button-row {
-    display: grid;
+    display: flex;
+    justify-content: flex-end;
 }
 
 /*Hide button-row default (non-hover)*/
@@ -81,11 +79,17 @@ main {
 
 .agenda-card-button-row button {
     /*filter: grayscale(100%);*/
-    color:transparent; text-shadow: 0 0 0 cornflowerblue;
+    color:transparent; text-shadow: 0 0 0 darkgrey;
     font-size: 15px;
 }
 
+.agenda-card-button-container {
+    min-height: 30px;
+}
 
+.stats-card {
+    width: 300px;
+}
 button {
     font-size: 20px;
     border: none;
@@ -94,11 +98,13 @@ button {
 }
 
 .inputForm {
+    width: 22rem;
     text-align: center;
     padding: 15px;
     background-color: white;
     border-radius: 5px;
     border: 1px solid lightgray;
+
 }
 
 .inputForm label {
@@ -139,13 +145,8 @@ input:focus, textarea:focus {
     font-size: 13px;
 }
 
-footer {
-    text-align: center;
-    width:100%;
-    height:100px;
-    position:absolute;
-    bottom:0;
-    left:0;
+.row .rowspan2 {
+    flex: 1 1 100%;
 }
 
 @media screen and (min-width: 1025px) {
@@ -168,5 +169,6 @@ footer {
 
     main {
         justify-content: flex-start;
+        max-width: 1400px;
     }
 }
