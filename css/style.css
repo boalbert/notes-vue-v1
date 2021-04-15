@@ -1,5 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Arvo:wght@700&family=Open+Sans&display=swap');
 
+/*Dark mode*/
+body.dark-theme {
+    background: #121212;
+}
+
+body.dark-theme div {
+    background-color: #152028;
+    color: #e3e3e3;
+}
+
+body.dark-theme .agenda-card {
+    border: 1px solid #232B32;
+}
+
+body.dark-theme .stats-card {
+    background-color: #152028;
+    color: #e3e3e3;
+
+}
+
+body.dark-theme .btn-toggle-darkmode {
+    color: #e3e3e3;
+}
+
+body.dark-theme .inputForm{
+    background-color: #152028;
+    color: #e3e3e3;
+    border: 1px solid #232B32;
+}
+
+body.dark-theme .agenda-card:hover {
+    box-shadow: 4px 4px 5px #17222a;
+}
+
+
+/* End of dark-mode properties */
+
+.btn-toggle-darkmode {
+    color: #e3e3e3;
+}
+
 body {
     font-family: 'Open Sans', Arial, sans-serif;
     background-color: #EFEFEF;

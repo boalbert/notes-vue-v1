@@ -2,19 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Notes 📚</title>
     <link href="css/style.css" rel="stylesheet"/>
 </head>
 <body>
-
 <section class="grid" id="app">
-
     <main>
         <section class="inputForm">
-
             <form id="noteForm" v-on:submit.prevent="addNewItem">
                 <h1>MY NOTES 📚</h1>
-                <p v-on:click="showStats = true">(❓)</p>
+
                 <div class="inputArea">
                     <label for="newItemTitle">Title</label>
                     <p>
@@ -23,11 +20,10 @@
                                 class="inputTitle"
                                 id="newItemTitle"
                                 placeholder="Title..."
-                                v-model="newItemTitle"
-                        >
+                                v-model="newItemTitle">
                     </p>
 
-                    <label for="newItemDesc">Content </label><span v-if="validForm">Please enter some text</span>
+                    <label for="newItemDesc">Content </label>
                     <p>
                         <textarea
                                 class="inputDesc"
@@ -35,244 +31,52 @@
                                 placeholder="Enter a note..."
                                 required
                                 v-model="newItemDesc"
-                        >   </textarea>
-
+                        >
+                        </textarea>
                     </p>
                 </div>
-                <button type="submit">Save 💾</button>
+                <button type="submit">💾</button>
             </form>
-
         </section>
 
-        <article class="agenda-card stats-card" v-if="showStats">
-            <h1>Fun stats!</h1>
+        <!--     Card with some stats about your notes-->
+        <article class="agenda-card stats-card">
+            <h3>Fun stuff!</h3>
+            <ul>
+                <li>
+                    Try dark mode ->
+                    <button class="btn-toggle-darkmode">💡</button>
+                </li>
+                <li>Pin 📌 a note to put it up-front</li>
+                <li>Remove a note with ❌</li>
+            </ul>
+            <h3>Statistics: </h3>
             <ul>
                 <li>Number of notes: {{ countNumberOfNotes }}</li>
                 <li>Wordcount: {{ countWords }}</li>
                 <li>Pinned notes: {{ countPinned }}</li>
-                <li>The word 'contact' is mentioned {{ countTheWordContact }} times.</li>
+                <li>'Contact' is mentioned in {{ countTheWordContact }} notes.</li>
             </ul>
-
         </article>
 
-        <div
-                is="agenda-item2"
+        <!--    Loop items[], inject data to 'note-item' component-->
+        <article
+                is="note-item"
+                v-bind:content="item.content"
                 v-bind:date="item.date"
-                v-bind:description="item.description"
-
                 v-bind:key="item.id"
                 v-bind:pin="item.pinned"
                 v-bind:style="{borderTop: item.color}"
                 v-bind:title="item.title"
+
                 v-for="(item, index) in sortedItems"
                 v-on:pin-item="pin(index)"
                 v-on:remove-item="remove(index)">
+        </article>
 
-
-        </div>
-        <!--                v-on:pin="item.pinned = true; item.color = '4px solid cornflowerblue'"-->
     </main>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/script.js"></script>
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-
-    Vue.component('agenda-item2', {
-        template:
-                `
-                  <div class="agenda-card">
-                      <div class="agenda-card-header">
-                        <h3><span v-if="pin">📌 </span>{{ title }} </h3>
-                      </div>
-                      <p>{{ description }} </p>
-                      <p class="date">{{ date }}</p>
-                      <div class="agenda-card-button-container">
-                        <div class="agenda-card-button-row">
-                          <button v-on:click=pinItem>📌</button>
-                          <button v-on:click="removeItem">❌</button>
-                        </div>
-                      </div>
-                  </div>`,
-        props: ['title', 'description', 'pin', 'date'],
-        methods: {
-            removeItem() {
-                this.$emit('remove-item')
-            },
-            pinItem() {
-                this.$emit('pin-item')
-            }
-        }
-    })
-
-    var app = new Vue({
-        el: '#app',
-        data: {
-            items: [
-                {
-                    id: 1,
-                    title: 'Call John!',
-                    description: 'Contact John next week regarding the business plan',
-                    pinned: false,
-                    color: '',
-                    date: 'Sat Apr 10 2021'
-                },
-                {
-                    id: 2,
-                    title: 'Shopping',
-                    description: 'Milk, cheese, bread, avocado.',
-                    pinned: false,
-                    color: '',
-                    date: 'Sun Apr 11 2021'
-                },
-                {
-                    id: 3,
-                    title: 'Laboration 2',
-                    description: 'Dont forget to submit the assignment on Friday!',
-                    pinned: false,
-                    color: '',
-                    date: 'Thu Apr 08 2021'
-                },
-                {
-                    id: 4,
-                    title: 'Netflix details',
-                    description: 'login: username@email.com password: aGreatPass88',
-                    pinned: false,
-                    color: '',
-                    date: 'Fri Apr 09 2021'
-                },
-                {
-                    id: 5,
-                    title: 'Daycare closed',
-                    description: 'Daycare is closed week 28 - 32',
-                    pinned: false,
-                    color: '',
-                    date: 'Sun Apr 11 2021'
-                },
-                {
-                    id: 6,
-                    title: 'Vacation',
-                    description: 'Contact Anders regarding vacation week 23 - 24. Wondered if I can come in and work. ',
-                    pinned: false,
-                    color: '',
-                    date: 'Mon Apr 12 2021'
-                },
-                {
-                    id: 7,
-                    title: 'Runs this week (workout-plan)',
-                    description: 'mon: easy pace(45min), tue: intervals (50min), thur: progression run(40min), sat: long run (100min)',
-                    pinned: false,
-                    color: '',
-                    date: 'Tue Apr 13 2021'
-                }
-            ],
-            nextItemId: 8,
-            newItemTitle: '',
-            newItemDesc: '',
-            stats: '',
-            showStats: false
-        },
-        methods: {
-            addNewItem: function () {
-                this.items.push({
-                    id: this.nextItemId++,
-                    title: this.newItemTitle,
-                    description: this.newItemDesc,
-                    pinned: this.pinned = false,
-                    date: this.calcNewDate()
-                })
-                this.newItemTitle = ''
-                this.newItemDesc = ''
-            },
-            calcNewDate: function () {
-                return new Date().toDateString()
-            },
-            remove(index) {
-                this.items.splice(index, 1)
-            },
-            pin(index) {
-                if (this.items[index].pinned === false) {
-                    this.items[index].pinned = true
-                    this.items[index].color = '2px solid cornflowerblue'
-                } else {
-                    this.items[index].pinned = false
-                    this.items[index].color = ''
-                }
-            }
-        },
-        computed: {
-            sortedItems: function () {
-
-                let sortByPinned = this.items;
-
-                sortByPinned = sortByPinned.sort((a, b) => {
-
-                    return b.pinned - a.pinned;
-                })
-
-                return sortByPinned;
-            },
-            countNumberOfNotes: function () {
-                return this.stats = this.items.length;
-            },
-
-            countWords: function () {
-                let countWords = 0
-
-                for (let i = 0; i < this.items.length; i++) {
-                    countWords += this.items[i].description.split(" ").length;
-                }
-
-                return countWords;
-            },
-
-            countPinned: function () {
-                let countPinned = 0
-
-                for (let i = 0; i < this.items.length; i++) {
-                    if (this.items[i].pinned) {
-                        countPinned++
-                    }
-                }
-                return countPinned;
-            },
-            countTheWordContact: function () {
-                let countContact = 0
-
-                let allwords = []
-
-                for (let i = 0; i < this.items.length; i++) {
-                    allwords.push(this.items[i].description.split(" "))
-                }
-
-                console.log(allwords)
-                console.log('Allwords Length: ' + allwords.length)
-
-                let randomNoteNumber = Math.floor((Math.random() * allwords.length) + 1);
-                console.log('Random Number: ' + randomNoteNumber)
-
-                console.log(allwords[randomNoteNumber])
-
-                let randomArrayDesc = new Array(allwords[randomNoteNumber])
-                console.log('RandomArrayDesc: ' + randomArrayDesc)
-
-                let arrayItem = randomArrayDesc[0];
-                console.log('ArrayItem: ' + arrayItem)
-
-
-                for (let i = 0; i < this.items.length; i++) {
-
-                    let desc = this.items[i].description.toLowerCase();
-
-                    if (desc.includes('contact')) {
-                        countContact++;
-                    }
-                }
-                return countContact;
-
-            }
-        }
-    })
-</script>
 </html>
