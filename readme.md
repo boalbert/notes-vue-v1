@@ -15,7 +15,7 @@ Enkel applikation för att hantera anteckningar skapas för kursen `Utveckling a
 
 
 
-## Live-demo
+## Demo
 
 ![](https://raw.githubusercontent.com/boalbert/notes-vue/master/demo-notes-app.gif)
 
