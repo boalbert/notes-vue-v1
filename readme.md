@@ -1,7 +1,6 @@
 # Notes-app / Anteckningsapp (Vue.js)
 
-Enkel applikation för att hantera anteckningar skapas för kursen `Utveckling av Webapplikationer VT2021`.
-
+Enkel applikation för att hantera anteckningar skapad för kursen `Utveckling av Webapplikationer VT2021`.
 
 
 ## Allmänt
@@ -12,7 +11,6 @@ Enkel applikation för att hantera anteckningar skapas för kursen `Utveckling a
 * Varje anteckning sparas i en `item[]` som fyller på Vue.component `note-item`
 * Sorteras efter `pinned:boolean`
 * Storlek på typsnitt etc anpassas via `@media-queries`
-
 
 
 ## Demo
